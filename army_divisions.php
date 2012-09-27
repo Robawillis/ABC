@@ -76,7 +76,11 @@ if(isset($_POST['action'])) {
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Army Base Camp &bull; Army Management</title>
     <link rel="stylesheet" type="text/css" href="css/abc_style.css" />
+    <link rel="stylesheet" type="text/css" href="css/jqueryui/jquery-ui.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/jquery.colorpicker.css" media="screen" />
     <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.js"></script>
+    <script type="text/javascript" src="js/jquery.colorpicker.js"></script>
     <script type="text/javascript" src="js/jquery.fullscreen.js"></script>
     <script type="text/javascript" language="javascript">
 		var FullscreenrOptions = {  width: 1920, height: 1080, bgID: '#bgimg' };
@@ -144,6 +148,7 @@ if(isset($_POST['action'])) {
                     <ul>
                         <li><a href="index.php">ABC Home</a></li>
                         <li><a href="army_management.php<?php if($abc_user->is_admin) echo '?army=' . $army_to_manage; ?>">Army Management</a></li>
+						<li><a href="army_battleday_signup.php">Army Battle Signup Review</a></li>
                         <li><a href="army_divisions.php<?php if($abc_user->is_admin) echo '?army=' . $army_to_manage; ?>">Divisions</a></li>
                         <li><a href="army_medals.php<?php if($abc_user->is_admin) echo '?army=' . $army_to_manage; ?>">Medals</a></li>
                         <li><a href="army_ranks.php<?php if($abc_user->is_admin) echo '?army=' . $army_to_manage; ?>">Ranks</a></li>
@@ -178,7 +183,7 @@ if(isset($_POST['action'])) {
                             }
                             echo '</select>' . PHP_EOL;
                         } ?>
-                    </div>
+					</div>		
                     <div class="am-control-box">
                     <form name="amd" method="POST">
                         <label for="div">Division: </label>

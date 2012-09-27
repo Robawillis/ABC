@@ -40,18 +40,18 @@ if($battle_to_manage) {
 	}
 	
 	$s_query = "SELECT
-		b.sign_up_id,
-		b.battle_id,
-		b.user_id,
-		b.sign_up_hours,
-		b.sign_up_time_stamp
-		FROM abc_battle_sign_ups b LEFT JOIN abc_users u USING (user_id) LEFT JOIN abc_ranks r USING (rank_id)
-		WHERE b.battle_id = $battle_to_manage AND u.army_id = ". (int)$armies[$army_to_manage]['army']->id . " ORDER BY r.rank_order";
+	b.sign_up_id,
+	b.battle_id,
+	b.user_id,
+	b.sign_up_hours,
+	b.sign_up_time_stamp
+	FROM abc_battle_sign_ups b LEFT JOIN abc_users u USING (user_id) LEFT JOIN abc_ranks r USING (rank_id)
+	WHERE b.battle_id = $battle_to_manage AND u.army_id = ". (int)$armies[$army_to_manage]['army']->id . " ORDER BY r.rank_order";
 	if($s_result = $mysqli->query($s_query)) {
-		$i = 0;
-		while ($s_row = $s_result->fetch_assoc()){
-			$battle_sign[$i]['battle'] = new Battle_sign_up($s_row);
-			$i++;
+	$i = 0;
+	while ($s_row = $s_result->fetch_assoc()){
+	$battle_sign[$i]['battle'] = new Battle_sign_up($s_row);
+	$i++;
 		}
 	}
 }
@@ -203,7 +203,7 @@ if(isset($_POST['bd-s-submit'])) {
                     <form name="amb" method="POST">
                         <label for="bat">Battle: </label>
                         <select name="bds-id" class="am-cb-select">
-                        <?php oo_battles($battle_to_manage, TRUE)?>
+                        <?php oo_indatebattles($battle_to_manage, TRUE)?>
                         </select>
                         <input type="submit" name="submit_amb" value="Go" />
                     </form>
@@ -229,10 +229,49 @@ if(isset($_POST['bd-s-submit'])) {
 					echo '<td> SBT '  . $i . ' </td>' . PHP_EOL; 
 					} ?>
 					</tr>
-					<?php if(date("d-m-y", time()) <= date("d-m-y", $batm->start)) {
+					<?php 
+
+	
+					for($b = ((int)$batm->length - 1) ; $b >= 0; $b--){
+					$totalhours[$b] = 0;
+					}	
+					for($i = 0; $i < count($battle_sign); $i++){
+					if($battle_sign[$i]['battle']->soldiers[0]['username'] == $user->data['username']){
+					echo '<tr class="user">
+					<td> <input type="hidden" name="battle_signid" value="' . $i . '"/>
+					<input type="hidden" name="signup_id" value="' . $battle_sign[$i]['battle']->id . '"/>' . $battle_sign[$i]['battle']->soldiers[0]['rank_name'] . '    ' . $battle_sign[$i]['battle']->soldiers[0]['username']. ' </td> ';
+					} else {
+					echo '<tr>
+					<td> ' . $battle_sign[$i]['battle']->soldiers[0]['rank_name'] . '    ' . $battle_sign[$i]['battle']->soldiers[0]['username']. ' </td> '; } 
+					for($b = ((int)$batm->length - 1) ; $b >= 0; $b--){
+					if(($battle_sign[$i]['battle']->hours[$b] != 1) && ($battle_sign[$i]['battle']->soldiers[0]['username'] == $user->data['username'])){
+					echo '<td bgcolor=#ffff00> <input type="checkbox" name="signuphour_' . $b .'" value="1" /> </td>';
+					$signed_up = 1;
+					} else if(($battle_sign[$i]['battle']->hours[$b] == 1) && ($battle_sign[$i]['battle']->soldiers[0]['username'] == $user->data['username'])) {
+					$signed_up = 1;
+					$totalhours[$b] = $totalhours[$b] + 1;
+					echo '<td bgcolor=#ffff00> <input type="checkbox" name="signuphour_' . $b .'" value="1" checked="checked" /> </td>';
+					} else if($battle_sign[$i]['battle']->hours[$b] == 1) {
+					echo '<td class="signed_up"> <input type="checkbox" name="hour_[][]" id="player' . $b .'-hour' . $i .'" value="1" checked="checked" disabled="true" /> </td>';
+					$totalhours[$b] = $totalhours[$b] + 1;
+					} else {
+					echo '<td class="not_signed_up"> <input type="checkbox" name="hour_[][]" id="player' . $b .'-hour' . $i .'" value="hour' .  $i .'"   disabled="true" /> </td>';
+					}
+					}
+					echo '</tr>
+					' ;	
+					}
+					if ($signed_up == 1){
+					echo '<tr>
+					<td> Total Players: </td>';
+					for($b = ((int)$batm->length - 1) ; $b >= 0; $b--){
+					echo '<td>  ' .  $totalhours[$b] . ' </td>';
+					}
+					}
+	
 
 										
-					oo_signups();
+					
 					?>
 					</tr>
 					<?php
@@ -258,14 +297,9 @@ if(isset($_POST['bd-s-submit'])) {
 					</form>
 					</div>	
 							
-                    <?php } else {
-					oo_signups_old();
-					?>
-					</tr>
-					</table>
-					</form>
-					</div>	
-					<?php }
+                    
+					
+					<?php 
 					
 					} 
                 	 } 

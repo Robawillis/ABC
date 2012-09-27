@@ -102,6 +102,7 @@ include_once 'library/functions/functions.output_options.php';
                     <ul>
                         <li><a href="index.php">ABC Home</a></li>
                         <li><a href="control_panel.php">Control Panel</a></li>
+						<li><a href="battleday_signup.php">Battle Day Sign Up</a></li>
                     </ul>
                 </div>
                 <div class="content-left-box">
@@ -202,8 +203,18 @@ include_once 'library/functions/functions.output_options.php';
             <label for="location">Location (e.g. U.K.):</label>
             <input type="text" name="location" id="location" value="<?php echo $abc_user->location; ?>" maxlength="255" />
             <br clear="all" /><br />
+			<label for="location">Location (e.g. U.K.):</label>
+            <input type="text" name="location" id="location" value="<?php echo $abc_user->location; ?>" maxlength="255" />
+            <br clear="all" /><br />
             <label for="vehicles">Ability With Vehicles:</label>
             <input type="text" name="vehicles" id="vehicles" value="<?php echo $abc_user->vehicles; ?>" maxlength="255" />
+            <br clear="all" /><br />
+			<label for="vehicles">Prefered Role:</label>
+            <select name="role" id="role">
+			<option value="Air"> Air </option>
+			<option value="Armour"> Armour </option>
+			<option value="Infantry"> Infantry </option>
+			</select>
             <br clear="all" /><br />
             <label for="other_notes">Other notes:</label>
             <textarea name="other_notes" id="other_notes"><?php echo $abc_user->other_notes; ?></textarea>

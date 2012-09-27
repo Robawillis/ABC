@@ -30,6 +30,7 @@ class Abc_user {
 	public $tags			= ""; //String containing the soldiers tags
 	public $time_stamp		= -1; //Time stamp of last update
 	public $vehicles		= "";
+	public $Role			= "";
 	
 	/**
 	 * Class constructor
@@ -299,6 +300,19 @@ class Abc_user {
 	}
 	
 	/**
+	 * Output: Soldier Info
+	 *
+	 * This function outputs the relevant information in the Soldier
+	 * signup box .
+	 */
+	
+	function output_soldier_rank() {
+		global $armies, $campaign, $user;
+		//Global information show no matter what
+		echo  $armies[$this->army_ptr]['ranks'][$this->rank_ptr]->name . ' ' . $user->data['username'];
+			}
+	
+	/**
 	 * Save
 	 *
 	 * Takes an array of information to store directly to the database or
@@ -347,7 +361,8 @@ class Abc_user {
 			user_availability = '" . $mysqli->real_escape_string($this->availability) . "', 
 			user_location = '" . $mysqli->real_escape_string($this->location) . "', 
 			user_vehicles = '" . $mysqli->real_escape_string($this->vehicles) . "', 
-			user_other_notes = '" . $mysqli->real_escape_string($this->other_notes) . "', 
+			user_other_notes = '" . $mysqli->real_escape_string($this->other_notes) . "',
+			Role = '" . $mysqli->real_escape_string($this->Role) . "', 
 			user_time_stamp = " . time();
 		}
 		$query .= " WHERE abc_user_id = $user_id";

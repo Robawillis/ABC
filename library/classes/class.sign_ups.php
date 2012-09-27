@@ -17,23 +17,8 @@ class Sign_ups {
 	 */
 	function Sign_ups() {
 		global $mysqli;
-		$query = "SELECT 
-			a.abc_user_id, 
-			a.user_id, 
-			a.user_bf3_name, 
-			a.user_availability, 
-			a.user_location, 
-			a.user_vehicles, 
-			a.user_other_notes, 
-			a.Role, 
-			p.username 
-			FROM abc_users a 
-			LEFT JOIN phpbb_users p 
-			USING (user_id) 
-			WHERE a.user_is_signed_up = 1 
-			ORDER BY a.Role, 
-			a.abc_user_id";
-		$result = $mysqli->query($query) or die($mysqli->error);
+		$query = "SELECT a.abc_user_id, a.user_id, a.Role, p.username FROM abc_users a LEFT JOIN phpbb_users p USING (user_id) WHERE a.user_is_signed_up = 1 ORDER BY a.Role, p.username_clean ";
+		$result = $mysqli->query($query);
 		$this->num = $result->num_rows;
 		while($row = $result->fetch_assoc()) {
 			$this->soldiers[] = $row;

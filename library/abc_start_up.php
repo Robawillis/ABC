@@ -13,6 +13,8 @@ require_once 'classes/class.campaign.php';
 require_once 'classes/class.division.php';
 require_once 'classes/class.rank.php';
 require_once 'classes/class.user.php';
+require_once 'classes/class.sign_ups.php';
+require_once 'classes/class.battle.php';
 
 //Initiate forum information
 define('IN_PHPBB', true);
@@ -35,6 +37,7 @@ if($mysqli->connect_errno) {
 }
 $campaign = new Campaign();
 $armies = array();
+$battles = array();
 //If a campaign is running we need to load all the armies for it
 if($campaign->is_running) {
 	$query = "SELECT
@@ -102,9 +105,35 @@ if($campaign->is_running) {
 		while($r_row = $r_result->fetch_assoc()) {
 			$armies[$i]['ranks'][$k++] = new Rank($r_row, $i);
 		}
+		
+		
+		
 		$i++;
 	}
+	
+	$b_query = "SELECT
+			battle_id,
+			battle_name,
+			battle_start,
+			battle_length,
+			battle_is_bfi,
+			battle_time_stamp
+			FROM abc_battles
+			WHERE campaign_id = " . $campaign->id . "
+			ORDER BY battle_id";
+		$b_result = $mysqli->query($b_query);	
+		$campaign->num_battles = $b_result->num_rows;
+		$l = 0;
+		while($b_row = $b_result->fetch_assoc()) {
+		$battles['battle'][$l++] = new Battle($b_row);
+		
+		}
+		
+		
+		
 }
 //Finally we load user information
 $abc_user = new Abc_user($user->data['user_id']);
+
+
 ?>

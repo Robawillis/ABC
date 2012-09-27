@@ -114,7 +114,7 @@ if(!$campaign->is_running) $campaign->num_armies = 3;
     <script type="text/javascript" src="js/jquery.colorpicker.js"></script>
     <script type="text/javascript" src="js/jquery.fullscreen.js"></script>
     <script type="text/javascript" language="javascript">
-		var FullscreenrOptions = {  width: 1920, height: 1080, bgID: '#bgimg' };
+	var FullscreenrOptions = {  width: 1920, height: 1080, bgID: '#bgimg' };
 		jQuery.fn.fullscreenr(FullscreenrOptions);
 		$(document).ready(function(e) {
 			$('#cs-draft-date').datepicker({ dateFormat: "dd-mm-yy" });
@@ -239,7 +239,7 @@ if(!$campaign->is_running) $campaign->num_armies = 3;
                         <label for="cs-draft-date">Draft Date:</label>
                         <input type="text" name="draft_date" id="cs-draft-date"<?php if($campaign->is_running) echo ' value="' . date("d-m-y", $campaign->draft_date) . '"'; ?> />
                         <br clear="all" />
-                        <div class="col-note" style="font-size: 10px;"><strong>NOTE:</strong> Dates must be formated in Eurpoean format: DD-MM-YYYY</div>
+						<div class="col-note" style="font-size: 10px;"><strong>NOTE:</strong> Dates must be formated in Eurpoean format: DD-MM-YYYY</div>
                     </div>
                     <div class="clear"><br /><br /></div>
                     <?php 
@@ -287,7 +287,8 @@ if(!$campaign->is_running) $campaign->num_armies = 3;
                         </select>
                         <?php } ?>
                         <br clear="all" /><br /><br />
-					<?php } ?>
+					<?php }
+                       var_dump($input);					?>
                     <input type="submit" name="campaign_save" value="Save" class="button" />
                     </form>
                 <?php } else { ?>

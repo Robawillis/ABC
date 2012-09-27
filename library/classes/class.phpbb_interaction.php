@@ -79,7 +79,7 @@ class phpbb_interaction {
 	 * @$colour	If the group is default set the users to this colour.
 	 */
 	function group_add_users($users, $groups, $colour) {
-		global $auth, $mysqli;
+		global $mysqli;
 		$default = FALSE;
 		/* First we need to make sure that something has been passed to 
 		   the function. */
@@ -128,10 +128,6 @@ class phpbb_interaction {
 				}
 			}
 		}
-		/* Finally we clear the users permission cache for each user */
-		foreach ($users as $u)
-			$auth->acl_clear_prefetch($u);
-		
 		return FALSE;		
 	}
 	
@@ -195,12 +191,9 @@ class phpbb_interaction {
 			}
 		}
 		$query .= ")";
-		if($mysqli->query($query)) {
-			/* Finally we clear the users permission cache for each user */
-			foreach ($users as $u)
-				$auth->acl_clear_prefetch($u);
+		if($mysqli->query($query))
 			return FALSE;
-		} else
+		else
 			return $mysqli->error;
 	}
 	

@@ -6,8 +6,8 @@
  */
 
 //Edit the following to connect to a different database
-$dbhost = "db403268617.db.1and1.com";
-$dbuser = "dbo403268617";
-$dbpass = "bananas";
-$dbname = "db403268617";
+$dbhost = "localhost";
+$dbuser = "root";
+$dbpass = "C0mput3r1.";
+$dbname = "forums";
 ?>

@@ -202,79 +202,66 @@ $sign_ups->load_army_numbers();
                     <div class="clear"></div>
                     <form name="asu" method="POST">
                     <?php
-					$sign_up_air = $sign_up_armour = $sign_up_infantry = array();
 					for($c = 0; $c < count($sign_ups->soldiers); $c++){
-						if($sign_ups->soldiers[$c]['Role'] == 'Air')
-							$sign_up_air[] = $sign_ups->soldiers[$c];
-						elseif($sign_ups->soldiers[$c]['Role'] == 'Armour')
-							$sign_up_armour[] = $sign_ups->soldiers[$c];
-						elseif($sign_ups->soldiers[$c]['Role'] == 'Infantry')
-							$sign_up_infantry[] = $sign_ups->soldiers[$c];
-					}					
-					if(count($sign_up_air)) {
-						echo ' <div class="small-heading"> Air Sign Ups </div> ';
-						$a = 1;
-						foreach($sign_up_air as $airsoldier) {
-							echo '<div class="asu-soldier"><div class="asu-info">
-								<strong>' . $a++ . ". " . htmlentities($airsoldier['username']) . '</strong> [<a href="http://battlelog.battlefield.com/bf3/user/' . $airsoldier['user_bf3_name'] . '" title="BF3 Soldier" target="_blank">' . $airsoldier['user_bf3_name'] . '</a>]<br />
-								<strong>Availability</strong>: ' . $airsoldier['user_availability'] . '<br />
-								<strong>Location</strong>: ' . $airsoldier['user_location'] . '<br />
-								<strong>Vehicles</strong>: ' . $airsoldier['user_vehicles'] . '<br />
-								<strong>Other Notes</strong>: ' . $airsoldier['user_other_notes'] . '<br />
-								</div>
-							<div class="asu-army"><select name="army_id[]">';
-							oo_armies();
-							echo '</select></div>
-							<input type="hidden" name="abc_user_id[]" value="' . $airsoldier['abc_user_id'] . '">
-							<input type="hidden" name="user_id[]" value="' . $airsoldier['user_id'] . '">
-							<br clear="all" /><br />
-							<div class="clear"></div></div>';
+					if ($sign_ups->soldiers[$c]['Role'] == 'Air') {
+					$sign_up_air[] = $sign_ups->soldiers[$c] ;
+					} else if ($sign_ups->soldiers[$c]['Role'] == 'Armour') {
+					$sign_up_armour[] = $sign_ups->soldiers[$c] ;
+					} else if($sign_ups->soldiers[$c]['Role'] == 'Infantry') {
+					$sign_up_infantry[] = $sign_ups->soldiers[$c];
+					var_dump($sign_up_infantry);
+					}
+					}
+					
+					if((isset($sign_up_air)) == true){
+					echo ' <div class="small-heading"> Air Sign Ups </div> ';
+					$a = 1;
+					foreach ($sign_up_air as $airsoldier){
+                        echo '<div class="asu-name">' . $a++ . ". " . htmlentities($airsoldier['username']) . '</div>
+                        <div class="asu-army"><select name="army_id[]">';
+                        oo_armies();
+                        echo '</select></div>
+                        <input type="hidden" name="abc_user_id[]" value="' . $airsoldier['abc_user_id'] . '">
+						<input type="hidden" name="user_id[]" value="' . $airsoldier['user_id'] . '">
+                        <br clear="all" /><br />';
 						}
 					}
-					if(count($sign_up_armour)){
-						echo ' <div class="small-heading"> Armour Sign Ups </div> ';
-						$ar = 1;
-						foreach ($sign_up_armour as $armoursoldier){
-							echo '<div class="asu-soldier"><div class="asu-info">
-								<strong>' . $ar++ . ". " . htmlentities($armoursoldier['username']) . '</strong> [<a href="http://battlelog.battlefield.com/bf3/user/' . $armoursoldier['user_bf3_name'] . '" title="BF3 Soldier" target="_blank">' . $armoursoldier['user_bf3_name'] . '</a>]<br />
-								<strong>Availability</strong>: ' . $armoursoldier['user_availability'] . '<br />
-								<strong>Location</strong>: ' . $armoursoldier['user_location'] . '<br />
-								<strong>Vehicles</strong>: ' . $armoursoldier['user_vehicles'] . '<br />
-								<strong>Other Notes</strong>: ' . $armoursoldier['user_other_notes'] . '<br />
-								</div>
-							<div class="asu-army"><select name="army_id[]">';
-							oo_armies();
-							echo '</select></div>
-							<input type="hidden" name="abc_user_id[]" value="' . $armoursoldier['abc_user_id'] . '">
-							<input type="hidden" name="user_id[]" value="' . $armoursoldier['user_id'] . '">
-							<br clear="all" /><br />
-							<div class="clear"></div></div>';
+					if((isset($sign_up_armour)) == true){
+					echo ' <div class="small-heading"> Armour Sign Ups </div> ';
+					
+					$ar = 1;
+					foreach ($sign_up_armour as $armoursoldier){
+                        echo '<div class="asu-name">' . $ar++ . ". " . htmlentities($armoursoldier['username']) . '</div>
+                        <div class="asu-army"><select name="army_id[]">';
+                        oo_armies();
+                        echo '</select></div>
+                        <input type="hidden" name="abc_user_id[]" value="' . $armoursoldier['abc_user_id'] . '">
+						<input type="hidden" name="user_id[]" value="' . $armoursoldier['user_id'] . '">
+                        <br clear="all" /><br />';
 						}
 					}
-					if(count($sign_up_infantry)){
-						echo ' <div class="small-heading"> Infantry Sign Ups </div> ';
-						$i = 1;
-						foreach($sign_up_infantry as $infantrysoldier) {
-							echo '<div class="asu-soldier"><div class="asu-info">
-								<strong>' . $i++ . ". " . htmlentities($infantrysoldier['username']) . '</strong> [<a href="http://battlelog.battlefield.com/bf3/user/' . $infantrysoldier['user_bf3_name'] . '" title="BF3 Soldier" target="_blank">' . $infantrysoldier['user_bf3_name'] . '</a>]<br />
-								<strong>Availability</strong>: ' . $infantrysoldier['user_availability'] . '<br />
-								<strong>Location</strong>: ' . $infantrysoldier['user_location'] . '<br />
-								<strong>Vehicles</strong>: ' . $infantrysoldier['user_vehicles'] . '<br />
-								<strong>Other Notes</strong>: ' . $infantrysoldier['user_other_notes'] . '<br />
-								</div>
-							<div class="asu-army"><select name="army_id[]">';
-							oo_armies();
-							echo '</select></div>
-							<input type="hidden" name="abc_user_id[]" value="' . $infantrysoldier['abc_user_id'] . '">
-							<input type="hidden" name="user_id[]" value="' . $infantrysoldier['user_id'] . '">
-							<br clear="all" /><br />
-							<div class="clear"></div></div>';
+					if((isset($sign_up_infantry)) == true){
+					echo ' <div class="small-heading"> Infantry Sign Ups </div> ';
+					
+					$i = 1;
+					foreach($sign_up_infantry as $infantrysoldier) {
+						
+                        echo '<div class="asu-name">' . $i++ . ". " . htmlentities($infantrysoldier['username']) . '</div>
+                        <div class="asu-army"><select name="army_id[]">';
+                        oo_armies();
+                        echo '</select></div>
+                        <input type="hidden" name="abc_user_id[]" value="' . $infantrysoldier['abc_user_id'] . '">
+						<input type="hidden" name="user_id[]" value="' . $infantrysoldier['user_id'] . '">
+                        <br clear="all" /><br />';
 						}
 					}	?>
                         <input type="submit" name="asu_save" value="Submit" />
                     </form>
                     <div class="clear"></div>
-					
+					<?php if((isset($sign_up_armour)) == true){
+						echo 'this works' ;
+						}
+					 ?>
                 <?php  } else { ?>
                     <div class="large-heading">Unauthorised access!</div>
                     You do not have permission to view this page.
