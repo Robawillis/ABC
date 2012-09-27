@@ -11,11 +11,14 @@ require_once 'config.php'; 							//Config file containing database connection d
 require_once 'classes/class.army.php';
 require_once 'classes/class.campaign.php';
 require_once 'classes/class.division.php';
+require_once 'classes/class.medal.php';
 require_once 'classes/class.rank.php';
 require_once 'classes/class.user.php';
 
 //Initiate forum information
 define('IN_PHPBB', true);
+$phpbb_root_path = "../";
+$phpEx = "php";
 include($phpbb_root_path . 'common.' . $phpEx);
 $user->session_begin();
 $auth->acl($user->data);
@@ -101,6 +104,25 @@ if($campaign->is_running) {
 		$k = 0;
 		while($r_row = $r_result->fetch_assoc()) {
 			$armies[$i]['ranks'][$k++] = new Rank($r_row, $i);
+		}
+    $r_result->free();
+		
+		//And the medals
+		$m_query = "SELECT 
+			medal_id,  
+			army_id, 
+			medal_name, 
+			medal_img, 
+			medal_ribbon,
+			medal_time_stamp 
+			FROM abc_medals 
+			WHERE army_id = " . $armies[$i]['army']->id . " 
+			ORDER BY medal_name, medal_id";
+		$m_result = $mysqli->query($m_query);
+		$armies[$i]['army']->num_medals = $m_result->num_rows;
+		$l = 0;
+		while($m_row = $m_result->fetch_assoc()) {
+			$armies[$i]['medals'][$l++] = new Medal($m_row, $i);
 		}
 		$i++;
 	}
