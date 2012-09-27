@@ -1,0 +1,640 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*CSS Reset*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin:				0;
+	padding:			0;
+	border:				0;
+	outline:			0;
+	vertical-align:		baseline;
+	background:			transparent;
+	text-decoration:	none;
+}
+body {
+	overflow: 			hidden;	/* Needed to eliminate scrollbars caused by the background image */
+	width:				100%;
+	height: 			100%;
+	line-height:		1;
+	font-family:		'Lucida Grande', 'Trebuchet MS', Verdana, Helvetica, Arial, sans-serif;
+	font-size:			11px;
+	color:				#333;
+}
+
+/* remember to define focus styles! */
+:focus {
+	outline:			0;
+}
+
+/* remember to highlight inserts somehow! */
+ins {
+	text-decoration:	none;
+}
+del {
+	text-decoration:	line-through;
+}
+
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+	border-collapse:	collapse;
+	border-spacing:		0;
+}
+/*End CSS Reset*/
+
+/* Common Classes */
+.clear {
+	clear:				both;
+}
+.higher {
+	height:				25px !important;
+	line-height:		20px !important;
+}
+.left {
+	float:				left;
+}
+.middle-text {
+	text-align:			center;
+}
+.no-right {
+	margin-right:		0px !important;
+}
+.pointer {
+	cursor:				pointer;
+}
+.right {
+	float:				right;
+}
+
+
+/* Global Divs */
+.new-body {
+	position:			absolute;
+	z-index:			5;
+	width:				100%;
+	height:				100%;
+	line-height:		14px;
+	overflow:			auto;
+}
+.header {
+	width:				930px;
+	height:				265px;
+	position:			relative;
+	margin:				50px auto 0 auto;
+	padding:			20px;
+	padding-bottom:		0;
+	background:			url('../images/bg_header.png') no-repeat;
+}
+.logo {
+	width:				930px;
+	height:				265px;
+	background:			url('../../styles/DirtyBoard2/theme/images/site_logo.png') no-repeat;
+}
+.nav-bar {
+	position:			absolute;
+	left:				50px;
+	bottom:				25px;
+	font-weight:		bold;
+	font-family:		Verdana, Helvetica, Arial, sans-serif;
+}
+.nav-bar li {
+	padding:			0 6px;
+	display:			inline;
+	list-style:			none;
+}
+.nav-bar a:link, .nav-bar a:visited {
+	color:				#CCBE91 !important;
+}
+.nav-bar a:hover, .navbar a:active {
+	color:				#800C0C !important;
+	text-decoration:	none !important;
+}
+
+.content {
+	width:				930px;
+	min-height:			100px;
+	margin:				0 auto;
+	padding:			20px;
+	background:			url('../images/bg_content.png') repeat-y;
+}
+.content-left {
+	width:				230px;
+	min-height:			100px;
+	float:				left;
+}
+.content-left-box {
+	width:				210px;
+	min-height:			10px;
+	margin-bottom:		20px;
+	padding:			10px;
+	background:			#FFF;
+	border-radius:		10px;
+	overflow:			none;
+}
+.content-left-box ul {
+	list-style:			url('../images/arrowbullet.gif');
+	margin-left:		25px;
+}
+.content-left-box li {
+	height:				18px;
+	line-height:		18px;
+	font-weight:		bolder;
+	font-size:			11px;
+}
+.content-left-box th, .content-left-box td {
+	min-height:			20px;
+	line-height:		14px;
+	padding:			2px 0;
+	text-align:			left;
+}
+.content-middle {
+	width:				680px;
+	min-height:			100px;
+	float:				right;
+}
+.content-middle-box {
+	width:				660px;
+	min-height:			10px;
+	margin-bottom:		20px;
+	padding:			10px;
+	background:			#FFF;
+	border-radius:		10px;
+	overflow:			hidden;
+}
+.content-middle-col {
+	width:				320px;
+	min-height:			10px;
+}
+.content-middle-col label {
+	width:				110px;
+	height:				20px;
+	line-height:		20px;
+	float:				left;
+	cursor:				pointer;
+}
+.content-middle-col input {
+	width:				192px;
+	height:				14px;
+	padding:			2px 3px;
+	border:				1px solid #C9BB8E;
+	border-radius:		3px;
+	font-size:			11px;
+	float:				right;
+}
+.content-middle-col select {
+	width:				200px;
+	height:				20px;
+	border:				1px solid #C9BB8E;
+	border-bottom-left-radius:3px;
+	border-top-left-radius:3px;
+	font-size:			11px;
+	float:				right;
+}
+.col-short-input {
+	width:				32px !important;
+	margin:				0 10px;
+	font-size:			10px;
+	float:				left !important;
+}
+.col-checkbox {
+	width:				25px !important;
+	margin:				4px 0 0 0 !important;
+	padding:			0 !important;
+}
+.col-note {
+	width:				100%;
+	text-align:			justify;
+}
+.col-mini-note {
+	width:				200px;
+	float:				right;
+}
+.large-heading {
+	width:				100%;
+	height:				25px;
+	line-height:		20px;
+	margin-bottom:		10px;
+	font-size:			18px;
+	font-family:		Arial, Helvetica, sans-serif;
+	font-weight:		bold;
+	color:				#5D3915;
+	border-bottom:		1px solid #C9BB8E;
+}
+.small-heading {
+	width:				100%;
+	height:				20px;
+	line-height:		16px;
+	margin-bottom:		10px;
+	font-size:			12px;
+	font-family:		Arial, Helvetica, sans-serif;
+	font-weight:		bold;
+	color:				#5D3915;
+	border-bottom:		1px solid #C9BB8E;
+}
+.content-right th, .content-right td {
+	padding:			3px 5px;
+	text-align:			left;
+	vertical-align:		middle;
+}
+
+.footer {
+	width:				930px;
+	height:				80px;
+	margin:				0 auto;
+	padding:			20px;
+	padding-top:		0;
+	background:			url('../images/bg_footer.png') no-repeat;
+}
+
+.sign-up-box {
+	position:			fixed;
+	top:				0;
+	left:				0;
+	width:				100%;
+	height:				100%;
+	background:			url('../images/opa50d.png');
+	display:			none;
+	z-index:			1000;
+}
+.sign-up-box-inner {
+	width:				400px;
+	min-height:			10px;
+	margin:				0 auto;
+	padding:			10px;
+	background:			#FFF;
+	border:				1px solid #C9BB8E;
+	border-radius:		10px;
+	overflow:			hidden;
+}
+.close-sign-up {
+	float:				right;
+	font-size:			10px;
+	font-weight:		normal;
+	cursor:				pointer;
+}
+.sign-up-box-inner label {
+	width:				150px;
+	height:				20px;
+	line-height:		20px;
+	float:				left;
+	cursor:				pointer;
+}
+.sign-up-box-inner input {
+	width:				242px;
+	height:				14px;
+	padding:			2px 3px;
+	border:				1px solid #C9BB8E;
+	border-radius:		3px;
+	font-size:			11px;
+	float:				right;
+}
+.sign-up-box-inner textarea {
+	width:				242px;
+	height:				42px;
+	line-height:		14px;
+	padding:			2px 3px;
+	border:				1px solid #C9BB8E;
+	border-radius:		3px;
+	font-size:			11px;
+	font-family:		Arial, Helvetica, sans-serif;
+	float:				right;
+}
+.sign-up-box-inner select {
+	width:				220px;
+	height:				20px;
+	line-height:		20px;
+	float:				left;
+	cursor:				pointer;
+}
+#army_password {
+	width:				142px !important;
+}
+.sign_up_submit {
+	width:				90px !important;
+	height:				25px !important;
+	border:				1px solid #5D3915 !important;
+	background:			#C9BB8E;
+	color:				#5D3915;
+	cursor:				pointer;
+}
+.sign_up_submit:hover {
+	border-color:		#C9BB8E !important;
+	background:			#5D3915;
+	color:				#C9BB8E;
+}
+.sign-up-password {
+	position:			relative;
+}
+.sign-up-password-loading {
+	position:			absolute;
+	top:				0;
+	left:				0;
+	width:				100%;
+	height:				100%;
+	background:			url('../images/opa50d.png');
+	display:			none;
+}
+.sign-up-password-loading img {
+	margin:				0 auto;
+	display:			block;
+}
+
+
+/* Admin Control Panel Divs */
+
+.tag-label {
+	width:				110px;
+	height:				20px;
+	line-height:		20px;
+	float:				left;
+	cursor:				pointer;
+}
+.tag-select {
+	width:				130px;
+	height:				20px;
+	margin-right:		10px;
+	border:				1px solid #C9BB8E;
+	border-bottom-left-radius:3px;
+	border-top-left-radius:3px;
+	font-size:			11px;
+	float:				left;
+}
+.army-tag-spacer {
+	clear:				both;
+	width:				100%;
+	height:				54px;
+}
+
+
+/* Admin Management Divs */
+.au-user-search {
+	width:				100%;
+	height:				30px;
+	line-height:		30px;
+}
+.au-user-search input {
+	width:				130px;
+	height:				14px;
+	float:				left;
+	margin:				2px 10px;
+	padding:			3px;
+	border:				1px solid #C9BB8E;
+	border-radius:		3px;
+	font-size:			11px;
+}
+.au-user-search label {
+	width:				110px;
+	height:				22px;
+	line-height:		22px;
+	float:				left;
+}
+#au-us-submit {
+	width:				60px;
+	height:				20px;
+	margin:				3px 10px;
+	padding:			0;
+	border:				1px solid #5D3915;
+	border-radius:		3px;
+	background:			#C9BB8E;
+	color:				#5D3915;
+	cursor:				pointer;
+}
+#au-us-submit:hover {
+	border:				#C9BB8E;
+	background:			#5D3915;
+	color:				#C9BB8E;
+}
+.au-us-text {
+	height:				22px;
+	line-height:		22px;
+	float:				left;
+}
+
+
+/* Admin Sign Up Divs */
+.asu-heading {
+	height:				20px;
+	line-height:		16px;
+	margin-bottom:		10px;
+	font-size:			12px;
+	font-family:		Arial, Helvetica, sans-serif;
+	font-weight:		bold;
+	color:				#5D3915;
+	border-bottom:		1px solid #C9BB8E;
+}
+.asu-soldier {
+	width:				100%;
+	margin:				10px 0;
+}
+.asu-info {
+	width:				390px;
+	line-height:		16px;
+	float:				left;
+}
+.asu-army {
+	width:				250px;
+	float:				right;
+}
+.asu-army select {
+	width:				250px;
+	height:				20px;
+	border:				1px solid #C9BB8E;
+	border-radius:		3px;
+	color:				#333;
+}
+
+
+/* Army Divisions Divs */
+.amd-new {
+	display:			none;
+}
+
+
+/* Army Draft Divs */
+.draft-list-soldier {
+	padding-bottom:		10px;
+}
+.draft-list-title {
+	height:				20px;
+	line-height:		20px;
+	border-bottom:		1px solid #C9BB8E;
+	cursor:				pointer;
+}
+.draft-list-hidden {
+	display:			none;
+}
+
+
+/* Army Management Divs */
+.army-div-hc {
+	width:				200px;
+	min-height:			130px;
+	margin:				10px auto;
+	padding:			9px;
+	border:				1px solid #C9BB8E;
+	border-radius:		5px;
+	box-shadow:			0 0 6px #999;
+	overflow:			hidden;
+}
+.army-div-normal {
+	width:				190px;
+	min-height:			130px;
+	float:				left;
+	margin:				10px 5px;
+	padding:			9px;
+	border:				1px solid #C9BB8E;
+	border-radius:		5px;
+	box-shadow:			0 0 6px #999;
+	overflow:			hidden;
+}
+.army-div-default {
+	width:				200px;
+	min-height:			130px;
+	margin:				10px auto;
+	padding:			9px;
+	border:				1px solid #C9BB8E;
+	border-radius:		5px;
+	box-shadow:			0 0 6px #999;
+	overflow:			hidden;
+}
+.am-control-box {
+	width:				640px;
+	min-height:			10px;
+	padding:			10px;
+	border:				1px solid #C9BB8E;
+	border-radius:		5px;
+	box-shadow:			0 0 6px #999;
+}
+.am-control-box label {
+	width:				50px;
+	height:				20px;
+	line-height:		20px;
+	float:				left;
+}
+.am-control-box input {
+	min-width:			30px;
+	height:				20px;
+	margin-left:		10px;
+	border:				1px solid #5D3915;
+	border-radius:		3px;
+	background:			#C9BB8E;
+	color:				#5D3915;
+	cursor:				pointer;
+}
+.am-control-box input:hover {
+	border:				#C9BB8E;
+	background:			#5D3915;
+	color:				#C9BB8E;
+}
+.am-cb-select {
+	width:				165px;
+	height:				20px;
+	float: 				left;
+	border:				1px solid #C9BB8E;
+	border-radius:		3px;
+	color:				#333;
+}
+.am-soldier-details {
+	width:				190px;
+	overflow:			hidden;
+}
+.am-soldier-details td {
+	height:				25px;
+	padding:			2px;
+	vertical-align:		middle;
+}
+.am-soldier-details img {
+	max-width:			25px;
+	max-height:			25px;
+}
+.am-soldier-details input {
+	margin:				0;
+}
+
+
+/* Army Ranks Divs */
+.amr-edit label, .amr-edit input {
+	margin:				5px;
+	float:				left;
+}
+.amr-edit img {
+	max-width:			128px;
+	max-height:			128px;
+	margin-right:		10px;
+	display:			block;
+	float:				left;
+}
+.amr-new {
+	display:			none;
+}
+
+
+/* Generic Classes */
+.button {
+	height:				20px;
+	margin-left:		10px;
+	border:				1px solid #5D3915;
+	border-radius:		3px;
+	background:			#C9BB8E;
+	color:				#5D3915;
+	cursor:				pointer;
+}
+.button:hover {
+	border-color:		#C9BB8E;
+	background:			#5D3915;
+	color:				#C9BB8E;
+}
+
+/* IDs */
+#am-cb-ajax {
+	width:				165px;
+	height:				20px;
+	float:				left;
+	margin-left:		10px;
+	overflow:			hidden;
+}
+#army-picker {
+	float:				right;
+	font-size:			10px;
+	border:				1px solid #C9BB8E;
+	border-radius:		3px;
+	color:				#333;
+}
+#bgimg {
+	position:			absolute;
+	z-index:			-1;
+}
+#soldier_sign_up_btn {
+	display:			block;
+	width:				120px;
+	height:				30px;
+	margin:				0 auto;
+	border:				1px solid #5D3915;
+	border-radius:		6px;
+	background:			#C9BB8E;
+	font-size:			14px;
+	font-weight:		bold;
+	color:				#5D3915;
+	cursor:				pointer;
+}
+#soldier_sign_up_btn:hover {
+	border:				#C9BB8E;
+	background:			#5D3915;
+	color:				#C9BB8E;
+}
+
+/* Links */
+a:link, a:visited {
+	color:				#5D3915;
+}
+a:hover, a:active {
+	color:				#800C0C;
+	text-decoration:	underline;
+}
