@@ -17,8 +17,6 @@ require_once 'classes/class.user.php';
 
 //Initiate forum information
 define('IN_PHPBB', true);
-$phpbb_root_path = "../";
-$phpEx = "php";
 include($phpbb_root_path . 'common.' . $phpEx);
 $user->session_begin();
 $auth->acl($user->data);
