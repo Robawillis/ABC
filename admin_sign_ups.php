@@ -35,7 +35,6 @@ if(isset($_POST['asu_save'])) {
 		$soldier_groups[$armies[$i]['army']->id] = $armies[$i]['army']->soldiers_forum_group;
 	}
 	
-	
 	//Next we load all the information submitted by the admin.
 	$array = array(
 		'abc_user_id'	=> array(
@@ -61,7 +60,7 @@ if(isset($_POST['asu_save'])) {
 			$input[$num_input]['army_id'] = $finput['army_id'][$i];
 			$input[$num_input]['division_id'] = $div_ids[$finput['army_id'][$i]];
 			$input[$num_input]['rank_id'] = $rank_ids[$finput['army_id'][$i]];
-			$input[$num_input]['rank_php'] = $rank_php[$finput['army_id'][$i]];
+			$input[$num_input++]['rank_php'] = $rank_php[$finput['army_id'][$i]];
 			$add_to_groups[$soldier_groups[$finput['army_id'][$i]]]['soldiers'][] = $finput['user_id'][$i];
 			$add_to_groups[$soldier_groups[$finput['army_id'][$i]]]['colour'] = $colours[$finput['army_id'][$i]];
 		}

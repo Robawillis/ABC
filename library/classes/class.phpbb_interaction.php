@@ -145,7 +145,7 @@ class phpbb_interaction {
 	 *			Format as: array(0 => [group_id]).
 	 */
 	function group_remove_users($users, $groups) {
-		global $mysqli;
+		global $auth, $mysqli;
 		/* First we need to make sure that something has been passed to 
 		   the function. */
 		if(!is_array($users) || !is_array($groups))
