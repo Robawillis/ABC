@@ -189,7 +189,7 @@ if(isset($_POST['action'])) {
                     	<label for="battle_name">Name: </label>
                         <input type="text" name="battle_name" id="battle_name" value="<?php echo $bat->name; ?>" required="required" />
 						<label for="battle_date">Battle Date:</label>
-                        <input type="text" name="battle_date" id="battle_date"<?php echo ' value="' . date("d-m-y", $bat->start) . '"'; ?> />
+                        <input type="text" name="battle_date" id="battle_date"<?php echo ' value="' . date("d-m-Y", $bat->start) . '"'; ?> />
 						<label for="battle_length">Length: </label>
                         <input type="text" name="battle_length" id="battle_length" value="<?php echo $bat->length; ?>" required="required" />
 						<label for="battle_is_bfi">Battle_is_BFI: </label> 
