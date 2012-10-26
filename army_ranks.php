@@ -51,57 +51,55 @@ if(isset($_POST['action'])) {
 			$rank->order = $_POST['rank_order'];
 			$rank->is_officer = isset($_POST['rank_is_officer']) ? 1 : 0;
 			foreach($_FILES as $file) {
-				if($file['error'] != 4) {
-					$dir = '/kunden/homepages/1/d168861977/htdocs/www/abc/images/cache/ranks/' . $campaign->id . '/' . $armies[$army_to_manage]['army']->id . '/'; //REMOVE . "phpbb/" ON LIVE SERVER
-					$php_dir = str_replace(array("/abc","/cache"), "", $dir);
-					if(!is_dir($dir))
-						mkdir($dir);
-					if(!is_dir($php_dir))
-						mkdir($php_dir);
-					if(file_exists('/kunden/homepages/1/d168861977/htdocs/www/cache/data_ranks.php'));
-						unlink('/kunden/homepages/1/d168861977/htdocs/www/cache/data_ranks.php');
-					if($file['error']) {
-						$msg_head = 'Error!';
-						switch($file['error']) {
-							default:
-								$msg_body = 'There was a problem uploading your file. Please try again.';
-								break;
-							case 1:
-							case 2:
-								//1 - file size exceeds limit in php.ini, 2 - file size exceeds limit set by form.
-								$msg_body = 'The file you uploaded was too big. Please try a smaller image.';
-								break;
-							case 3:
-								//Partial upload
-								$msg_body = 'The file did not completely upload. Please try again.';
-							case 4:
-								//No file uploaded
-								break;
-							case 6:
-								//No temp folder
-								$msg_body = 'An error occured during the file upload process. Please contact an admin quoting file upload error 6.';
-								break;
-							case 7:
-								//Failed to write to disk
-								$msg_body = 'An error occured during the file upload process. Please contact an admin quoting file upload error 7.';
-								break;
-						}
-					} else {
-						if($file['type'] == "image/gif" || $file['type'] == "image/jpeg" || $file['type'] == "image/pjpeg" || $file['type'] == "image/png") {
-							if(file_exists($dir . $file['name']))
-								unlink($dir . $file['name']);
-							if(!move_uploaded_file($file['tmp_name'], $dir . $file['name'])) {
-								$msg_head = 'Error!';
-								$msg_body = 'Unable to upload file to the images/cache directory. Please check the folder permissions.';
-							} elseif(!copy($dir . $file['name'], $php_dir . $file['name'])) {
-								$msg_head = 'Error!';
-								$msg_body = 'Unable to upload file to the phpbb images directory. Please check the folder permissions.';
-							} else 
-								$rank->img = str_replace($_SERVER['DOCUMENT_ROOT'] . '/abc/', '', $dir) . $file['name'];
-						} else {
+				$dir = $_SERVER['DOCUMENT_ROOT'] . '/abc/images/cache/ranks/' . $campaign->id . '/' . $armies[$army_to_manage]['army']->id . '/'; //REMOVE . "phpbb/" ON LIVE SERVER
+				$php_dir = str_replace(array("/abc","/cache"), "", $dir);
+				if(!is_dir($dir))
+					mkdir($dir);
+				if(!is_dir($php_dir))
+					mkdir($php_dir);
+				if(file_exists($_SERVER['DOCUMENT_ROOT'] . '/cache/data_ranks.php'));
+					unlink($_SERVER['DOCUMENT_ROOT'] . '/cache/data_ranks.php');
+				if($file['error']) {
+					$msg_head = 'Error!';
+					switch($file['error']) {
+						default:
+							$msg_body = 'There was a problem uploading your file. Please try again.';
+							break;
+						case 1:
+						case 2:
+							//1 - file size exceeds limit in php.ini, 2 - file size exceeds limit set by form.
+							$msg_body = 'The file you uploaded was too big. Please try a smaller image.';
+							break;
+						case 3:
+							//Partial upload
+							$msg_body = 'The file did not completely upload. Please try again.';
+						case 4:
+							//No file uploaded
+							break;
+						case 6:
+							//No temp folder
+							$msg_body = 'An error occured during the file upload process. Please contact an admin quoting file upload error 6.';
+							break;
+						case 7:
+							//Failed to write to disk
+							$msg_body = 'An error occured during the file upload process. Please contact an admin quoting file upload error 7.';
+							break;
+					}
+				} else {
+					if($file['type'] == "image/gif" || $file['type'] == "image/jpeg" || $file['type'] == "image/pjpeg" || $file['type'] == "image/png") {
+						if(file_exists($dir . $file['name']))
+							unlink($dir . $file['name']);
+						if(!move_uploaded_file($file['tmp_name'], $dir . $file['name'])) {
 							$msg_head = 'Error!';
-							$msg_body = 'You tried to upload an invalid file type. You may only upload a jpg, gif or png image file type.';
-						}
+							$msg_body = 'Unable to upload file to the images/cache directory. Please check the folder permissions.';
+						} elseif(!copy($dir . $file['name'], $php_dir . $file['name'])) {
+							$msg_head = 'Error!';
+							$msg_body = 'Unable to upload file to the phpbb images directory. Please check the folder permissions.';
+						} else 
+							$rank->img = str_replace($_SERVER['DOCUMENT_ROOT'] . '/abc/', '', $dir) . $file['name'];
+					} else {
+						$msg_head = 'Error!';
+						$msg_body = 'You tried to upload an invalid file type. You may only upload a jpg, gif or png image file type.';
 					}
 				}
 			}
@@ -118,10 +116,8 @@ if(isset($_POST['action'])) {
 						$groups = array();
 						$query = "SELECT user_id FROM abc_users WHERE rank_id = " . $rank->id;
 						$result = $mysqli->query($query);
-						if($result->num_rows) {
-							while($row = $result->fetch_row())
-								$users[] = $row[0];
-						}
+						while($row = $result->fetch_row())
+							$users[] = $row[0];
 						for($i = 0; $i < $campaign->num_armies; $i++) {
 							if($armies[$i]['army']->id == $rank->army_id)
 								$groups[] = $armies[$i]['army']->officer_forum_group;
@@ -139,10 +135,8 @@ if(isset($_POST['action'])) {
 						$colour = "";
 						$query = "SELECT user_id FROM abc_users WHERE rank_id = " . $rank->id;
 						$result = $mysqli->query($query);
-						if($result->num_rows) {
-							while($row = $result->fetch_row())
-								$users[] = $row[0];
-						}
+						while($row = $result->fetch_row())
+							$users[] = $row[0];
 						for($i = 0; $i < $campaign->num_armies; $i++) {
 							if($armies[$i]['army']->id == $rank->army_id) {
 								$groups[] = $armies[$i]['army']->officer_forum_group;
@@ -309,6 +303,7 @@ if(isset($_POST['action'])) {
                     <ul>
                         <li><a href="index.php">ABC Home</a></li>
                         <li><a href="army_management.php<?php if($abc_user->is_admin) echo '?army=' . $army_to_manage; ?>">Army Management</a></li>
+						<li><a href="army_battleday_signup.php">Army Battle Signup Review</a></li>
                         <li><a href="army_divisions.php<?php if($abc_user->is_admin) echo '?army=' . $army_to_manage; ?>">Divisions</a></li>
                         <li><a href="army_medals.php<?php if($abc_user->is_admin) echo '?army=' . $army_to_manage; ?>">Medals</a></li>
                         <li><a href="army_ranks.php<?php if($abc_user->is_admin) echo '?army=' . $army_to_manage; ?>">Ranks</a></li>
@@ -408,7 +403,7 @@ if(isset($_POST['action'])) {
                         <input type="submit" name="submit-new" value="Create" />
                     </form>
                     </div>
-                <?php } else { ?>
+	                <?php } else { ?>
                     <div class="large-heading">Unauthorised access!</div>
                     You do not have permission to view this page.
                 <?php } ?>

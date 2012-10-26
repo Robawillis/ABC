@@ -103,4 +103,122 @@ function oo_tags($cur) {
 	foreach($array as $v => $t)
 		echo '<option value="' . $v . '"' . ($cur == $v ? ' selected="selected"' : '') . '>' . $t . '</option>';
 }
+
+/**
+ * battles
+ *
+ * Outputs all the battles. Optional selector for having a none choice at 
+ * the top.
+ * @$none	Boolian variable. If set to true then a none option is at the 
+ *			top with a value of 0. Default set to TRUE.
+ * @$s		Int variable. During the for loop if the current army ID 
+ *			matches then the option will be selected.
+ */
+function oo_battles($s = 0, $none = FALSE) {
+	global $battles, $campaign;
+	if($none)
+		echo '<option value="0">None</option>';		
+	foreach($battles['battle'] as $bat){
+		echo '<option value="' . $bat->id . '"' . ($s == $bat->id ? ' selected="selected"' : '') . '>' . $bat->name . ' , ' . date("d-M-y", $bat->start) . '</option>';
+		
+		}
+}
+
+/**
+ * battles
+ *
+ * Outputs all the battles. Optional selector for having a none choice at 
+ * the top.
+ * @$none	Boolian variable. If set to true then a none option is at the 
+ *			top with a value of 0. Default set to TRUE.
+ * @$s		Int variable. During the for loop if the current army ID 
+ *			matches then the option will be selected.
+ */
+function oo_indatebattles($s = 0, $none = FALSE) {
+	global $battles, $campaign;
+	if($none)
+		echo '<option value="0">None</option>';		
+	foreach($battles['battle'] as $bat){
+		if(date("d-m-y", time()) <= date("d-m-y", $bat->start)){
+		echo '<option value="' . $bat->id . '"' . ($s == $bat->id ? ' selected="selected"' : '') . '>' . $bat->name . ' , ' . date("d-M-y", $bat->start) . '</option>';
+		}
+		}
+}
+
+/**
+ * Signups
+ * <input type="hidden" name="signup" value=".$battle_sign[$i]'
+ * Outputs all the users who have signedup for the specfic battle
+ * <input type="checkbox" name="hour_[][]" id="player' . $b .'-hour' . $i .'" value="hour' .  $i .' checked="checked"  disabled=true />
+ * <input type="checkbox" name="hour_[][]" id="player' . $b .'-hour' . $i .'" value="hour' .  $i .'   disabled=true />
+ */
+
+function oo_signups() {
+	global $batm ,$signed_up, $battle_sign, $user;
+	for($b = ((int)$batm->length - 1) ; $b >= 0; $b--){
+	$totalhours[$b] = 0;
+	}
+	for($i = 0; $i < count($battle_sign); $i++){
+	if($battle_sign[$i]['battle']->soldiers[0]['username'] == $user->data['username']){
+	echo '<TBODY CLASS="user"><tr>
+	<td> <input type="hidden" name="battle_signid" value="' . $i . '"/>
+	<input type="hidden" name="signup_id" value="' . $battle_sign[$i]['battle']->id . '"/>' . $battle_sign[$i]['battle']->soldiers[0]['rank_name'] . '    ' . $battle_sign[$i]['battle']->soldiers[0]['username']. ' </td> ';
+	} else {
+	echo '<tr>
+	<td> ' . $battle_sign[$i]['battle']->soldiers[0]['rank_name'] . '    ' . $battle_sign[$i]['battle']->soldiers[0]['username']. ' </td> '; } 
+	for($b = ((int)$batm->length - 1) ; $b >= 0; $b--){
+	if(($battle_sign[$i]['battle']->hours[$b] != 1) && ($battle_sign[$i]['battle']->soldiers[0]['username'] == $user->data['username'])){
+	echo '<td bgcolor=#ffff00> <input type="checkbox" name="signuphour_' . $b .'" value="1" /> </td>';
+	$signed_up = 1;
+	} else if(($battle_sign[$i]['battle']->hours[$b] == 1) && ($battle_sign[$i]['battle']->soldiers[0]['username'] == $user->data['username'])) {
+	$signed_up = 1;
+	$totalhours[$b] = $totalhours[$b] + 1;
+	echo '<td bgcolor=#ffff00> <input type="checkbox" name="signuphour_' . $b .'" value="1" checked="checked" /> </td>';
+	} else if($battle_sign[$i]['battle']->hours[$b] == 1) {
+	echo '<td bgcolor=#ffff00> <input type="checkbox" name="hour_[][]" id="player' . $b .'-hour' . $i .'" value="1" checked="checked" disabled="true" /> </td>';
+	$totalhours[$b] = $totalhours[$b] + 1;
+	} else {
+	echo '<td> <input type="checkbox" name="hour_[][]" id="player' . $b .'-hour' . $i .'" value="hour' .  $i .'"   disabled="true" /> </td>';
+	}
+	}
+	echo '</tr>
+	</TBODY>' ;	
+	}
+	if ($signed_up == 1){
+	echo '<tr>
+	<td> Total Players: </td>';
+	for($b = ((int)$batm->length - 1) ; $b >= 0; $b--){
+	echo '<td>  ' .  $totalhours[$b] . ' </td>';
+	}
+	}
+	
+}
+
+function oo_signups_old() {
+	global $batm ,$signed_up, $battle_sign, $user;
+	for($b = ((int)$batm->length - 1) ; $b >= 0; $b--){
+	$totalhours[$b] = 0;
+	}
+	for($i = 0; $i < count($battle_sign); $i++){
+	echo '<tr>
+	<td> ' . $battle_sign[$i]['battle']->soldiers[0]['rank_name'] . '    ' . $battle_sign[$i]['battle']->soldiers[0]['username']. ' </td> ';  
+	for($b = ((int)$batm->length - 1) ; $b >= 0; $b--){
+	if($battle_sign[$i]['battle']->hours[$b] == 1) {
+	echo '<td bgcolor=#ffff00> <input type="checkbox" name="hour_[][]" id="player' . $b .'-hour' . $i .'" value="1" checked="checked" disabled="true" /> </td>';
+	$totalhours[$b] = $totalhours[$b] + 1;
+	} else {
+	echo '<td> <input type="checkbox" name="hour_[][]" id="player' . $b .'-hour' . $i .'" value="hour' .  $i .'"   disabled="true" /> </td>';
+	}
+	}
+	echo '</tr>' ;	
+	}
+	echo '<tr>
+	<td> Total Players: </td>';
+	for($b = ((int)$batm->length - 1) ; $b >= 0; $b--){
+	echo '<td>  ' .  $totalhours[$b] . ' </td>';
+		}
+	
+	
+	}
+
 ?>

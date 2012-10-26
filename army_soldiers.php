@@ -53,6 +53,7 @@ $army_to_manage = ($abc_user->is_admin && isset($_REQUEST['army'])) ? (int)$_REQ
                     <ul>
                         <li><a href="index.php">ABC Home</a></li>
                         <li><a href="army_management.php<?php if($abc_user->is_admin) echo '?army=' . $army_to_manage; ?>">Army Management</a></li>
+						<li><a href="army_battleday_signup.php">Army Battle Signup Review</a></li>
                         <li><a href="army_divisions.php<?php if($abc_user->is_admin) echo '?army=' . $army_to_manage; ?>">Divisions</a></li>
                         <li><a href="army_medals.php<?php if($abc_user->is_admin) echo '?army=' . $army_to_manage; ?>">Medals</a></li>
                         <li><a href="army_ranks.php<?php if($abc_user->is_admin) echo '?army=' . $army_to_manage; ?>">Ranks</a></li>

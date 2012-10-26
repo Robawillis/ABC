@@ -31,6 +31,7 @@ class Campaign {
 	
 	public $num_armies			= -1;		//Stores the number of armies whilst they are being loaded
 	public $num_signed_up		= 0;		//Stores the number of people currently signed up
+	public $num_battles         = -1;
 	
 	public $army_join_pw		= FALSE;	//TRUE if at least one army has a pw to join set
 	
@@ -81,6 +82,8 @@ class Campaign {
 				
 		}
 	}
+	
+	
 	
 	/**
 	 * Create
