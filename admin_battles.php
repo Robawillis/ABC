@@ -218,7 +218,6 @@ if(isset($_POST['action'])) {
                     <div class="large-heading">Unauthorised access!</div>
                     You do not have permission to view this page.
                 <?php } ?>
-				<?php echo date("d-m-y", $bat->start); ?>
                 </div>
             </div>
             <div class="clear"></div>
