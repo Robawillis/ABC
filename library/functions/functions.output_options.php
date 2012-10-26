@@ -139,7 +139,7 @@ function oo_indatebattles($s = 0, $none = FALSE) {
 	if($none)
 		echo '<option value="0">None</option>';		
 	foreach($battles['battle'] as $bat){
-		if(date("d-m-y", time()) <= date("d-m-y", $bat->start)){
+		if(time() <= $bat->start){
 		echo '<option value="' . $bat->id . '"' . ($s == $bat->id ? ' selected="selected"' : '') . '>' . $bat->name . ' , ' . date("d-M-y", $bat->start) . '</option>';
 		}
 		}
