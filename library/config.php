@@ -6,8 +6,8 @@
  */
 
 //Edit the following to connect to a different database
-$dbhost = "db2091.perfora.net";
-$dbuser = "dbo301395051";
-$dbpass = "5fUWqnbe";
-$dbname = "db301395051";
+$dbhost = "db403268617.db.1and1.com";      
+$dbuser = "dbo403268617";
+$dbpass = "bananas";    
+$dbname = "db403268617";
 ?>
