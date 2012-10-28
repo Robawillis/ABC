@@ -26,13 +26,10 @@ class Battle_sign_up {
 			$k = str_replace("sign_up_", "", $k);
 			$this->$k = $v;
 		}
-		$query = "SELECT pu.username, r.rank_name, r.rank_short, r.rank_img FROM abc_users u LEFT JOIN phpbb_users pu USING (user_id) LEFT JOIN abc_ranks r USING (rank_id) WHERE u.user_id = " . (int)$this->user_id . " and u.campaign_id = " . (int)$campaign->id . "";
+		$query = "SELECT pu.username, r.rank_name, r.rank_short, r.rank_img FROM abc_users u LEFT JOIN phpbb_users pu USING (user_id) LEFT JOIN abc_ranks r USING (rank_id) WHERE u.user_id = " . (int)$this->user_id . " and u.campaign_id = " . (int)$campaign->id;
 		$result = $mysqli->query($query);
 		while($row = $result->fetch_assoc())
-			$this->soldiers[] = $row;
-		$this->hours = decbin($this->hours);
-		$this->hours = str_split($this->hours);
-		$this->hours = array_reverse($this->hours);
+			$this->soldiers = $row;
 	}
 	
 	/**

@@ -131,7 +131,6 @@ if($campaign->is_running) {
 	
 	//Next prepare a separate array for the side bar with a list of up comming battles
 	if(count($battles)) {
-		$bitwise_array = array(1,2,3,8,16,32,64,128,256,512,1024,2048);
 		foreach($battles as $bat) {
 			if($bat->start >= time()) {
 				for($i = 0; $i < 2; $i++) { //Go through each battle twice, once for each army
@@ -144,7 +143,7 @@ if($campaign->is_running) {
 						//For each soldier check their sign up hours. If they are signed up for the hour add an extra 1 to the appropriate field in hours array.
 						while($row = $result->fetch_row()) {
 							for($j = 0; $j < $bat->length; $j++) {
-								$bwt = $bitwise_array[$j];
+								$bwt = pow(2, $j);
 								if(($row[0] & $bwt) == $bwt) {
 									$hours[$j]++;
 									if($hours[$j] > $max_sign_ups)
