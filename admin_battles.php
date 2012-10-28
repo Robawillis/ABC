@@ -4,7 +4,7 @@ $phpEx = substr(strrchr(__FILE__, '.'), 1);
 require_once 'library/abc_start_up.php';
 require_once 'library/functions/functions.output_options.php';
 require_once 'library/classes/class.battle.php';
-$battle_to_edit = (isset($_GET['bat'])) ? (int)$_GET['bat'] : 0;
+$battle_to_edit = (isset($_POST['bat'])) ? (int)$_POST['bat'] : 0;
 $msg_head = '';
 $msg_body = '';
 
@@ -114,7 +114,7 @@ if(isset($_POST['action'])) {
 		var FullscreenrOptions = {  width: 1920, height: 1080, bgID: '#bgimg' };
 		jQuery.fn.fullscreenr(FullscreenrOptions);
 		$(document).ready(function(e) {
-		$('.battle_dates').datetimepicker({
+		$('#battle_date<?php echo $battle_to_edit ? ', #battle_date' . $battle_to_edit : ''; ?>').datetimepicker({
 			dateFormat: "dd-mm-yy",
 			showMinute: false
 		});
@@ -253,7 +253,7 @@ if(isset($_POST['action'])) {
                     <div class="large-heading">Admin Battle Management</div>
                     You can add and edit any battles for the current campaign here.
 					<div class="am-control-box">
-                    <form name="amb" method="GET">
+                    <form name="amb" method="POST">
                         <label for="bat">Battle: </label>
                         <select name="bat" class="am-cb-select">
                         <?php oo_battles($battle_to_edit, TRUE)?>
@@ -271,7 +271,7 @@ if(isset($_POST['action'])) {
                     	<label for="battle_name">Name: </label>
                         <input type="text" name="battle_name" id="battle_name" value="<?php echo $bat->name; ?>" required="required" />
 						<label for="battle_date">Battle Date:</label>
-                        <input type="text" name="battle_date" id="battle_date"<?php echo ' value="' . date("d-m-Y H:i", $bat->start) . '"'; ?> class="battle_dates" />
+                        <input type="text" name="battle_date" id="battle_date<?php echo $battle_to_edit; ?>"<?php echo ' value="' . date("d-m-Y H:i", $bat->start) . '"'; ?> />
 						<label for="battle_length">Length: </label>
                         <input type="text" name="battle_length" id="battle_length" value="<?php echo $bat->length; ?>" required="required" />
 						<label for="battle_is_bfi">Battle_is_BFI: </label> 
@@ -288,7 +288,7 @@ if(isset($_POST['action'])) {
                     	<label for="battle_name">Name: </label>
                         <input type="text" name="battle_name" id="battle_name" required="required" />
                         <label for="battle_date">Battle Date:</label>
-                        <input type="text" name="battle_date" id="battle_date" class="battle_dates" />
+                        <input type="text" name="battle_date" id="battle_date" />
 						<label for="battle_length">Length: </label>
                         <input type="text" name="battle_length" id="battle_length" required="required" />
 						<label for="battle_is_bfi">Battle_is_BFI: </label> 

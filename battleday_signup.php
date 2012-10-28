@@ -101,7 +101,10 @@ if(isset($_POST['bd-s-submit'])) {
 		break;
 	}
 	
-} ?>
+}
+	
+
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -300,7 +303,7 @@ if(isset($_POST['bd-s-submit'])) {
                                     	<?php if($is_user) { ?>
                                     	<input type="hidden" name="battle_signid" value="<?php echo $i; ?>"/>
                                     	<input type="hidden" name="signup_id" value="<?php echo $b->id; ?>"/>
-                                        <?php } 
+                                        <?php $signed_up = 1; } 
 										echo $b->soldiers['rank_name'] . ' ' . $b->soldiers['username']; ?>
                                     </td>
                                     <?php for($j = 0; $j < (int)$batm->length; $j++) { 
@@ -308,7 +311,6 @@ if(isset($_POST['bd-s-submit'])) {
 										$bwo = pow(2, $j);
 										if(($b->hours & $bwo) == $bwo) {
 											$su = 1;
-											$signed_up = 1;
 											$totalhours[$j]++;
 										} ?>
                                     <td<?php echo $is_user ? '' : ' class="' . ($su ? 'signed_up"' : 'not_signed_up"'); ?>>

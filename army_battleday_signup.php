@@ -310,7 +310,7 @@ if(isset($_POST['bd-s-submit'])) {
                                     	<?php if($is_user) { ?>
                                     	<input type="hidden" name="battle_signid" value="<?php echo $i; ?>"/>
                                     	<input type="hidden" name="signup_id" value="<?php echo $b->id; ?>"/>
-                                        <?php } 
+                                        <?php $signed_up = 1; } 
 										echo $b->soldiers['rank_name'] . ' ' . $b->soldiers['username']; ?>
                                     </td>
                                     <?php for($j = 0; $j < (int)$batm->length; $j++) { 
@@ -318,7 +318,6 @@ if(isset($_POST['bd-s-submit'])) {
 										$bwo = pow(2, $j);
 										if(($b->hours & $bwo) == $bwo) {
 											$su = 1;
-											$signed_up = 1;
 											$totalhours[$j]++;
 										} ?>
                                     <td<?php echo $is_user ? '' : ' class="' . ($su ? 'signed_up"' : 'not_signed_up"'); ?>>

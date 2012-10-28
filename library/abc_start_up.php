@@ -131,18 +131,18 @@ if($campaign->is_running) {
 	
 	//Next prepare a separate array for the side bar with a list of up comming battles
 	if(count($battles)) {
-		foreach($battles as $bat) {
-			if($bat->start >= time()) {
+		foreach($battles as $b) {
+			if($b->start >= time()) {
 				for($i = 0; $i < 2; $i++) { //Go through each battle twice, once for each army
 					$hours = array();
-					for($j = 0; $j < $bat->length; $j++) //Initialise the hours all to 0
+					for($j = 0; $j < $b->length; $j++) //Initialise the hours all to 0
 						$hours[$j] = 0;
-					$query = "SELECT sign_up_hours FROM abc_battle_sign_ups LEFT JOIN abc_users USING (user_id) WHERE army_id = " . $armies[$i]['army']->id . " AND battle_id = " . $bat->id;
+					$query = "SELECT sign_up_hours FROM abc_battle_sign_ups LEFT JOIN abc_users USING (user_id) WHERE army_id = " . $armies[$i]['army']->id . " AND battle_id = " . $b->id;
 					$result = $mysqli->query($query);
 					if($result->num_rows) {
 						//For each soldier check their sign up hours. If they are signed up for the hour add an extra 1 to the appropriate field in hours array.
 						while($row = $result->fetch_row()) {
-							for($j = 0; $j < $bat->length; $j++) {
+							for($j = 0; $j < $b->length; $j++) {
 								$bwt = pow(2, $j);
 								if(($row[0] & $bwt) == $bwt) {
 									$hours[$j]++;
@@ -152,7 +152,7 @@ if($campaign->is_running) {
 							}
 						}
 					}
-					$bat_left_bar[$bat->name][$armies[$i]['army']->name] = $hours;
+					$bat_left_bar[$b->name][$armies[$i]['army']->name] = $hours;
 				}
 			}
 		}
