@@ -118,7 +118,7 @@ function oo_battles($s = 0, $none = FALSE) {
 	global $battles, $campaign;
 	if($none)
 		echo '<option value="0">None</option>';		
-	foreach($battles['battle'] as $bat){
+	foreach($battles as $bat){
 		echo '<option value="' . $bat->id . '"' . ($s == $bat->id ? ' selected="selected"' : '') . '>' . $bat->name . ' , ' . date("d-M-y", $bat->start) . '</option>';
 		
 		}
@@ -138,7 +138,7 @@ function oo_indatebattles($s = 0, $none = FALSE) {
 	global $battles, $campaign;
 	if($none)
 		echo '<option value="0">None</option>';		
-	foreach($battles['battle'] as $bat){
+	foreach($battles as $bat){
 		if(time() <= $bat->start){
 		echo '<option value="' . $bat->id . '"' . ($s == $bat->id ? ' selected="selected"' : '') . '>' . $bat->name . ' , ' . date("d-M-y", $bat->start) . '</option>';
 		}

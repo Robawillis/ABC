@@ -7,37 +7,27 @@
 
 class Battle { 
 
+	public $campaign_id				= 0;
    	public $id						= -1;
 	public $is_bfi				    = FALSE; //Army is neutral, does not have results in battle days
-	public $name					= "";
-	public $time_stamp				= -1; //Time stamp of last update
-	public $start    		        = -1; //start time for each battle
 	public $length					= -1; //length for each battle
-	
-	public $num_bat					= 0;
-	public $campaign_id				= 0;
-	
+	public $name					= "";
+	public $start    		        = -1; //start time for each battle
+	public $time_stamp				= -1; //Time stamp of last update
 	
 	
 	/**
 	 * Class constructor 
 	 *
-	 * Detect if campaign is currently running and if so load the details.
+	 * Take variables passed into $data and store them in public variables.
 	 */
 	function Battle($data = array()) {
+		//Make sure the data passed is an array, otherwise abort
+		if(!is_array($data))
+			return 'NOT_ARRAY';
 		foreach($data as $k => $v) {
-		$k = str_replace("battle_", "", $k);
-		$this->$k = $v;
-		}
-		
-	}
-	
-	function load_num_battles() {
-		global $mysqli;
-		$query = "SELECT count(*) FROM abc_battles WHERE campaign_id = " . (int)$this->campaign_id;
-		if($result = $mysqli->query($query)) {
-			while($row = $result->fetch_row())
-				$this->num_soldiers = $row[0];
+			$k = str_replace("battle_", "", $k);
+			$this->$k = $v;
 		}
 	}
 		
@@ -52,15 +42,10 @@ class Battle {
 
 	
 	/**
+	 * Create
 	 *
-	 *Create
-	 *
-	 *Creates a new battle into the database using varibles set
-	 *
-	 *
-	 **/
-	
-	
+	 * Creates a new battle in the database using varibles set
+	 */
 	function create() {
 		global $mysqli;
 		$query = "INSERT INTO abc_battles
@@ -98,14 +83,5 @@ class Battle {
 		else
 			return $mysqli->error;
 	}
-	
-	/*function num_battles () {
-	global $mysqli, $campaign;
-	$query = "SELECT count(*) from abc_battles WHERE campaign_id = " . (int)$campaign->id;
-	if($result = $mysqli->query($query)){
-		while($row = $result->fetch_row())
-		$this->num_battles = $row[0];	
-	}
-*/
 }
 ?>

@@ -6,6 +6,7 @@
  * must be included individually on a page before it can be used.
  */
 
+date_default_timezone_set('UTC'); //Force server to use UTC timezone, it seems the host likes to use local timezone.
 require_once 'classes/class.phpbb_interaction.php';	//Must be included first to load all user information from PHPBB
 require_once 'config.php'; 							//Config file containing database connection details
 require_once 'classes/class.army.php';
@@ -36,8 +37,9 @@ if($mysqli->connect_errno) {
 	exit;
 }
 $campaign = new Campaign();
-$armies = array();
-$battles = array();
+$armies = $battles = $bat_left_bar = array();
+$max_sign_ups = 0;
+
 //If a campaign is running we need to load all the armies for it
 if($campaign->is_running) {
 	$query = "SELECT
@@ -79,9 +81,8 @@ if($campaign->is_running) {
 		$d_result = $mysqli->query($d_query);
 		$armies[$i]['army']->num_divs = $d_result->num_rows;
 		$j = 0;
-		while($d_row = $d_result->fetch_assoc()) {
+		while($d_row = $d_result->fetch_assoc())
 			$armies[$i]['divisions'][$j++] = new Division($d_row, $i);
-		}
 		$d_result->free();
 		
 		//Followed by all the ranks for the army
@@ -102,38 +103,63 @@ if($campaign->is_running) {
 		$r_result = $mysqli->query($r_query);
 		$armies[$i]['army']->num_ranks = $r_result->num_rows;
 		$k = 0;
-		while($r_row = $r_result->fetch_assoc()) {
+		while($r_row = $r_result->fetch_assoc())
 			$armies[$i]['ranks'][$k++] = new Rank($r_row, $i);
-		}
-		
-		
-		
+		$r_result->free();
 		$i++;
 	}
 	
+	//Next we load all battles for this campaign.
 	$b_query = "SELECT
-			battle_id,
-			battle_name,
-			battle_start,
-			battle_length,
-			battle_is_bfi,
-			battle_time_stamp
-			FROM abc_battles
-			WHERE campaign_id = " . $campaign->id . "
-			ORDER BY battle_id";
-		$b_result = $mysqli->query($b_query);	
-		$campaign->num_battles = $b_result->num_rows;
-		$l = 0;
-		while($b_row = $b_result->fetch_assoc()) {
-		$battles['battle'][$l++] = new Battle($b_row);
-		
+		battle_id,
+		battle_name,
+		battle_start,
+		battle_length,
+		battle_is_bfi,
+		battle_time_stamp
+		FROM abc_battles
+		WHERE campaign_id = " . $campaign->id . "
+		ORDER BY battle_id";
+	$b_result = $mysqli->query($b_query);	
+	$campaign->num_battles = $b_result->num_rows;
+	$l = 0;
+	if($b_result->num_rows) {
+		while($b_row = $b_result->fetch_assoc())
+			$battles[$l++] = new Battle($b_row);
+	}
+	$b_result->free();
+	
+	//Next prepare a separate array for the side bar with a list of up comming battles
+	if(count($battles)) {
+		$bitwise_array = array(1,2,3,8,16,32,64,128,256,512,1024,2048);
+		foreach($battles as $bat) {
+			if($bat->start >= time()) {
+				for($i = 0; $i < 2; $i++) { //Go through each battle twice, once for each army
+					$hours = array();
+					for($j = 0; $j < $bat->length; $j++) //Initialise the hours all to 0
+						$hours[$j] = 0;
+					$query = "SELECT sign_up_hours FROM abc_battle_sign_ups LEFT JOIN abc_users USING (user_id) WHERE army_id = " . $armies[$i]['army']->id . " AND battle_id = " . $bat->id;
+					$result = $mysqli->query($query);
+					if($result->num_rows) {
+						//For each soldier check their sign up hours. If they are signed up for the hour add an extra 1 to the appropriate field in hours array.
+						while($row = $result->fetch_row()) {
+							for($j = 0; $j < $bat->length; $j++) {
+								$bwt = $bitwise_array[$j];
+								if(($row[0] & $bwt) == $bwt) {
+									$hours[$j]++;
+									if($hours[$j] > $max_sign_ups)
+										$max_sign_ups = $hours[$j];
+								}
+							}
+						}
+					}
+					$bat_left_bar[$bat->name][$armies[$i]['army']->name] = $hours;
+				}
+			}
 		}
-		
-		
-		
+	}
+	
 }
 //Finally we load user information
 $abc_user = new Abc_user($user->data['user_id']);
-
-
 ?>
