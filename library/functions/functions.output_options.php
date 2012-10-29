@@ -76,6 +76,24 @@ function oo_ranks($p, $s = 0, $none = FALSE) {
 }
 
 /**
+ * Medals
+ *
+ * Outputs all the medals for the specified army pointer.
+ * @$p		Pointer to the army whos ranks we're outputting.
+ * @$s		Int variable. During the for loop if the current rank ID 
+ *			matches then the option will be selected.
+ * @$none	Boolian variable. If set to true then a none option is at the 
+ *			top with a value of 0. Default set to FALSE.
+ */
+function oo_medals($p, $s = 0, $none = FALSE) {
+	global $armies;
+	if($none)
+		echo '<option value="0">None</option>';
+	foreach($armies[$p]['medals'] as $medal)
+		echo '<option value="' . $medal->id . '"' . ($s == $medal->id ? ' selected="selected"' : '') . '>' . $medal->name . '</option>';
+}
+
+/**
  * States
  *
  * Outputs all the states of campaigns, selecting the current state.
