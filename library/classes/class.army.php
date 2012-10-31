@@ -26,6 +26,7 @@ class Army {
 	
 	public $num_divs				= -1; //Armies are created with 2 divs, except neutral army
 	public $num_ranks				= -1;
+	public $num_medals				= -1;
 	public $num_soldiers			= -1; //Set by class.sign_ups
 	
 	/**
