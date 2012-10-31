@@ -172,11 +172,11 @@ if(isset($_POST['am-cb-submit'])) {
 			case 3:
 				//Award medal
 				if($input['am-cb-decision']) {
-					$query = "INSERT INTO abc_medal_awards (campaign_id, user_id, medal_id, award_time_stamp) VALUES ";
+					$query = "INSERT INTO abc_medal_awards (campaign_id, user_id, medal_id, award_time_stamp) VALUES";
 					$limit = count($input['am-checked']);
 					for($i = 0; $i < $limit; $i++) {
 						$query .= "({$campaign->id}, {$input['am-checked'][$i]}, {$input['am-cb-decision']}, " . time();
-						$query .= ($i < ($limit - 1)) ? ")" : "), ";
+						$query .= ($i < ($limit - 1)) ? "), " : ")";
 					}
 					if($mysqli->query($query)) {
 						$form_head = 'Success: Medals Awarded';
