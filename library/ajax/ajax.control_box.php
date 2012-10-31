@@ -40,10 +40,13 @@ switch($p) {
 		echo '</select>';
 		break;
 	
-	
 	//Award medal
 	case 3:
-		
+		echo '<select name="am-cb-decision" id="am-cb-decision" class="am-cb-select">';
+		for($i = 0; $i < $armies[$a]['army']->num_medals; $i++) {
+			echo '<option value="' . $armies[$a]['medals'][$i]->id . '">' . $armies[$a]['medals'][$i]->name . '</option>';
+		}
+		echo '</select>';
 		break;
 	
 	case 4:
