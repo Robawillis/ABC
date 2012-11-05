@@ -179,9 +179,9 @@ if(isset($_POST['am-cb-submit'])) {
 						$query .= ($i < ($limit - 1)) ? "), " : ")";
 					}
 					if($mysqli->query($query)) {
-  					for($i = 0; $i < $limit; $i++) {
-  						ribbons($input['am-checked'][$i]);
-  					}
+  						for($i = 0; $i < $limit; $i++) {
+  							ribbons($input['am-checked'][$i]);
+  						}
 						$form_head = 'Success: Medals Awarded';
 						$form_msg = 'The medals have been awarded successfuly. If this page does not automatically return to the previous page please <a href="army_management.php">click here</a>.
 						<meta http-equiv="refresh" content="3">';
