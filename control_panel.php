@@ -147,8 +147,19 @@ include_once 'library/functions/functions.output_options.php';
             </div>
             <div class="content-middle">
                 <div class="content-middle-box">
-                    <div class="large-heading">Under Construction!</div>
-                    This section is still under construction. Eventually you will be able to enter your soldier ID for tracking across battles and view your campaign history here.
+                    <div class="large-heading">Ribbons</div>
+                    <?php
+                    $ribbons_path = 'images/cache/medals/' . $campaign->id . '/' . $abc_user->id . '.gif';
+                    $ribbons_path_full = 'http://' . $_SERVER["SERVER_NAME"] . '/abc/' . $ribbons_path;
+                    
+                    if (file_exists($ribbons_path)) { ?>
+                      This signature was automatically generated based on your awarded medals:<br /><br />
+                      <center><img src="<?php echo $ribbons_path; ?>" /></center><br />
+                      You can use the following BBCode to use it in your signature:<br />
+                      <input type="text" name="ribbons-path" id="ribbons-path" value="[img]<?php echo $ribbons_path_full; ?>[/img]" readonly="readonly" />
+                    <?php } else { ?>
+                      Once a medal is awarded to you, you will find an automatically generated signature here.
+                    <?php } ?>
                 </div>
             </div>
             <div class="clear"></div>
