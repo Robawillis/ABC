@@ -390,6 +390,14 @@ table {
 	float:				right;
 	cursor:				pointer;
 }
+#ribbons-path {
+	width:				500px;
+	height:				14px;
+	padding:			2px 3px;
+	border:				1px solid #C9BB8E;
+	border-radius:		3px;
+	font-size:			11px;
+}
 
 
 /* Admin Control Panel Divs */
