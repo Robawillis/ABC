@@ -62,6 +62,7 @@ function ribbons($abc_id) {
       if ($num_awarded > 7) {
         $deco_path = "images/star_gold.png";
         $deco_number = $num_awarded - 7;
+        if ($deco_number > 3) {$deco_number = 3;}
         }
       elseif ($num_awarded > 4) {
         $deco_path = "images/star_silver.png";
