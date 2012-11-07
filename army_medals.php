@@ -45,8 +45,6 @@ if(isset($_POST['action'])) {
 				$dir = 'images/cache/medals/' . $campaign->id . '/' . $armies[$army_to_manage]['army']->id . '/'; //REMOVE . "phpbb/" ON LIVE SERVER
 				if(!is_dir($dir))
 					mkdir($dir,0777,true);
-				if(!is_dir($php_dir))
-					mkdir($php_dir,0777,true);
 				if($file['error']) {
 					$msg_head = 'Error!';
 					switch($file['error']) {
@@ -112,8 +110,6 @@ if(isset($_POST['action'])) {
 				$dir = 'images/cache/medals/' . $campaign->id . '/' . $armies[$army_to_manage]['army']->id . '/'; //REMOVE . "phpbb/" ON LIVE SERVER
 				if(!is_dir($dir))
 					mkdir($dir);
-				if(!is_dir($php_dir))
-					mkdir($php_dir);
 				if($file['error']) {
 					$msg_head = 'Error!';
 					switch($file['error']) {
