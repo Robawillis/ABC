@@ -168,6 +168,12 @@ table {
 	border-radius:		10px;
 	overflow:			hidden;
 }
+.content-middle-box th, .content-middle-box td {
+	min-height:			20px;
+	line-height:		14px;
+	padding:			2px 0;
+	text-align:			left;
+}
 .content-middle-col {
 	width:				320px;
 	min-height:			10px;
@@ -344,51 +350,6 @@ table {
 .sign-up-password-loading img {
 	margin:				0 auto;
 	display:			block;
-}
-.battle-left-window {
-	position:			relative;
-	width:				210px;
-	overflow:			hidden;
-}
-.battle-left-wrapper {
-	position:			absolute;
-	top:				0;
-	left:				0;
-	width:				2100px;
-}
-.battle-left-battle {
-	width:				210px;
-	float:				left;
-}
-.battle-left-battle th, .battle-left-battle td {
-	text-align:			center;
-}
-.battle-left-heading {
-	width:				190px;
-	height:				20px;
-	line-height:		16px;
-	padding:			0 10px;
-	margin-bottom:		5px;
-	font-size:			11px;
-	font-family:		Arial, Helvetica, sans-serif;
-	font-weight:		bold;
-	color:				#5D3915;
-	border-bottom:		1px solid #C9BB8E;
-}
-.battle-left-controls {
-	width:				210px;
-	height:				30px;
-	line-height:		30px;
-	color:				#C9BB8E;
-}
-.battle-left-prev {
-	float:				left;
-	display:			none;
-	cursor:				pointer;
-}
-.battle-left-next {
-	float:				right;
-	cursor:				pointer;
 }
 #ribbons-path {
 	width:				500px;
@@ -628,6 +589,21 @@ table {
 	display:			none;
 }
 
+/* Army Medals Divs */
+.amm-edit label, .amm-edit input {
+	margin:				5px;
+	float:				left;
+}
+.amm-edit img {
+	max-width:			128px;
+	max-height:			128px;
+	margin-right:		10px;
+	display:			block;
+	float:				left;
+}
+.amm-new {
+	display:			none;
+}
 
 /* Generic Classes */
 .button {
@@ -767,7 +743,7 @@ a:hover, a:active {
 }
 .bd-soldier-details td {
 	width: 				100px;
-	height:				50px;
+	height:				100px;
 	padding:			5px;
 	vertical-align:		middle;
 	border:				1px solid #C9BB8E;
@@ -789,24 +765,20 @@ a:hover, a:active {
 	
 }
 
-
-.bd-soldier-details tbody tr.user td{
+.bd-soldier-details tbody.user td{
 	background: 		#AC58FA;
-	font-size:			10px;
-	font-family:		Arial, Helvetica, sans-serif;
-	font-weight:		bold;
-	color:				#FFFFFF;
 }
 
-.bd-soldier-details td.signed_up {
+.bd-soldier-details tbody tr.user {
+	background: 		#AC58FA;
+}
+
+.bd-soldier-details tbody td.signed_up {
 	background: 		#04B404;
 }
 
-.bd-soldier-details td.not_signed_up {
+.bd-soldier-details tbody td.not_signed_up {
 	background: 		#B40404;
 }
-
-
-
 
 	

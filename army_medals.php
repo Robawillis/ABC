@@ -40,18 +40,13 @@ if(isset($_POST['action'])) {
 
     case 'edit':
 			$medal->name = $_POST['medal_name'];
-			$medal->img = $_POST['medal_img'];
-			$medal->ribbon = $_POST['medal_ribbon'];
       $filen = 0;
 			foreach($_FILES as $file) {
-				$dir = $_SERVER['DOCUMENT_ROOT'] . '/abc/images/cache/medals/' . $campaign->id . '/' . $armies[$army_to_manage]['army']->id . '/'; //REMOVE . "phpbb/" ON LIVE SERVER
-				$php_dir = str_replace(array("/abc","/cache"), "", $dir);
+				$dir = 'images/cache/medals/' . $campaign->id . '/' . $armies[$army_to_manage]['army']->id . '/'; //REMOVE . "phpbb/" ON LIVE SERVER
 				if(!is_dir($dir))
-					mkdir($dir);
+					mkdir($dir,0777,true);
 				if(!is_dir($php_dir))
-					mkdir($php_dir);
-				if(file_exists($_SERVER['DOCUMENT_ROOT'] . '/cache/data_medals.php'));
-					unlink($_SERVER['DOCUMENT_ROOT'] . '/cache/data_medals.php');
+					mkdir($php_dir,0777,true);
 				if($file['error']) {
 					$msg_head = 'Error!';
 					switch($file['error']) {
@@ -85,15 +80,11 @@ if(isset($_POST['action'])) {
 						if(!move_uploaded_file($file['tmp_name'], $dir . $file['name'])) {
 							$msg_head = 'Error!';
 							$msg_body = 'Unable to upload file to the images/cache directory. Please check the folder permissions.';
-						} elseif(!copy($dir . $file['name'], $php_dir . $file['name'])) {
-							$msg_head = 'Error!';
-							$msg_body = 'Unable to upload file to the phpbb images directory. Please check the folder permissions.';
-						} else { 
-              if ($filen == 0) {
-							  $medal->img = str_replace($_SERVER['DOCUMENT_ROOT'] . '/abc/', '', $dir) . $file['name'];
-              } else {
-                $medal->ribbon = str_replace($_SERVER['DOCUMENT_ROOT'] . '/abc/', '', $dir) . $file['name'];
-              }
+						} elseif ($ribbon != 1 and $_FILES['medal_img']['name'] != "") {
+							$medal->img = str_replace($_SERVER['DOCUMENT_ROOT'] . '/abc/', '', $dir) . $file['name'];
+              $ribbon = 1;
+            } else {
+              $medal->ribbon = str_replace($_SERVER['DOCUMENT_ROOT'] . '/abc/', '', $dir) . $file['name'];
             }
 					} else {
 						$msg_head = 'Error!';
@@ -115,15 +106,11 @@ if(isset($_POST['action'])) {
 		case 'new':
 			$medal = new medal(array(), -1);
 			$medal->army_id = $armies[$army_to_manage]['army']->id;
-			$medal->img = $_POST['medal_short'];
 			$medal->name = $_POST['medal_name'];
-			$medal->ribbon = $_POST['medal_ribbon'];
       $filen = 0;
 			foreach($_FILES as $file) {
-				$dir = $_SERVER['DOCUMENT_ROOT'] . '/abc/images/cache/medals/' . $campaign->id . '/' . $armies[$army_to_manage]['army']->id . '/'; //REMOVE . "phpbb/" ON LIVE SERVER
-				$php_dir = str_replace(array("/abc","/cache"), "", $dir);
-				echo $php_dir;
-        if(!is_dir($dir))
+				$dir = 'images/cache/medals/' . $campaign->id . '/' . $armies[$army_to_manage]['army']->id . '/'; //REMOVE . "phpbb/" ON LIVE SERVER
+				if(!is_dir($dir))
 					mkdir($dir);
 				if(!is_dir($php_dir))
 					mkdir($php_dir);
@@ -160,15 +147,11 @@ if(isset($_POST['action'])) {
 						if(!move_uploaded_file($file['tmp_name'], $dir . $file['name'])) {
 							$msg_head = 'Error!';
 							$msg_body = 'Unable to upload file to the images/cache directory. Please check the folder permissions.';
-						} elseif(!copy($dir . $file['name'], $php_dir . $file['name'])) {
-							$msg_head = 'Error!';
-							$msg_body = 'Unable to upload file to the phpbb images directory. Please check the folder permissions.';
-						} else {
-              if ($filen == 0) {
-							  $rank->img = str_replace($_SERVER['DOCUMENT_ROOT'] . '/abc/', '', $dir) . $file['name'];
-              } else {
-                $rank->ribbon = str_replace($_SERVER['DOCUMENT_ROOT'] . '/abc/', '', $dir) . $file['name'];
-              }
+						} elseif ($ribbon != 1  and $_FILES['medal_img']['name'] != "") {
+							$medal->img = str_replace($_SERVER['DOCUMENT_ROOT'] . '/abc/', '', $dir) . $file['name'];
+              $ribbon = 1;
+            } else {
+              $medal->ribbon = str_replace($_SERVER['DOCUMENT_ROOT'] . '/abc/', '', $dir) . $file['name'];
             }
 					} else {
 						$msg_head = 'Error!';
@@ -230,7 +213,7 @@ if(isset($_POST['action'])) {
                 $(window).attr("location", "army_medals.php?army=" + $(this).val());
             });
 			<?php } ?>
-        <?php if($msg_body) { ?>
+      <?php if($msg_body) { ?>
 			setTimeout(function() {
 				$('#msg-box').slideUp(500);
 			}, 5000);
@@ -239,14 +222,14 @@ if(isset($_POST['action'])) {
 		
 		function add() {
 			<?php if(isset($medal)) { ?>
-			$('.amr-edit').slideUp(500);
+			$('.amm-edit').slideUp(500);
 			<?php } ?>
-			$('.amr-new').slideDown(500);
+			$('.amm-new').slideDown(500);
 		}
 		$('#medal_del_btn').live("click", function(e) {
 			if(confirm("Once deleted you cannot undo this action. Are you sure you wish to continue?")) {
-				$('#amr-action').val('del');
-				$('#amr-medal').submit();
+				$('#amm-action').val('del');
+				$('#amm-medal').submit();
 			}
         });
 	</script>
@@ -367,7 +350,7 @@ if(isset($_POST['action'])) {
                         } ?>
                     </div>
                     <div class="am-control-box">
-                    <form name="amr" method="POST">
+                    <form name="amm" method="POST">
                         <label for="rank">Medal: </label>
                         <select name="medal" class="am-cb-select">
                         <?php oo_medals($army_to_manage, $medal_to_edit, TRUE); ?>
@@ -378,9 +361,9 @@ if(isset($_POST['action'])) {
                     </div>
                 	<?php if(isset($medal)) { ?>
                     <br />
-                    <div class="amr-edit">
-                    <form name="amr-medal" id="amr-medal" method="POST" enctype="multipart/form-data">
-                    	<input type="hidden" name="action" id="amr-action" value="edit" />
+                    <div class="amm-edit">
+                    <form name="amm-medal" id="amm-medal" method="POST" enctype="multipart/form-data">
+                    	<input type="hidden" name="action" id="amm-action" value="edit" />
                         <input type="hidden" name="medal" value="<?php echo $medal->id; ?>" />
                     	<label for="medal_name">Name: </label>
                         <input type="text" name="medal_name" id="medal_name" value="<?php echo $medal->name; ?>" required="required" />
@@ -400,8 +383,8 @@ if(isset($_POST['action'])) {
                     </div>
                     <?php } ?>
                     <br />
-                    <div class="amr-new">
-                    <form name="amr-new" id="amr-new" method="POST" enctype="multipart/form-data">
+                    <div class="amm-new">
+                    <form name="amm-new" id="amm-new" method="POST" enctype="multipart/form-data">
                     	<input type="hidden" name="action" id="amn-action" value="new" />
                     	<label for="nmedal_name">Name: </label>
                         <input type="text" name="medal_name" id="nmedal_name" required="required" />
