@@ -142,8 +142,8 @@ $sign_ups->load_army_numbers();
     <script type="text/javascript" src="js/jquery.fullscreen.js"></script>
     <script type="text/javascript" language="javascript">
 		/* Controls the upcoming battles movements */
-	var cur_battle = 1;
-		var max_battle = <?php echo (count($bat_left_bar)); ?>;
+		var cur_battle = 0;
+		var max_battle = <?php echo (count($bat_left_bar) - 1); ?>;
 		$(document).ready(function(e) {
 			$('.battle-left-window').css('height', $('.battle-left-wrapper').height());
 			$('.battle-left-wrapper').css('width', ((max_battle + 1) * 211));
@@ -153,7 +153,7 @@ $sign_ups->load_army_numbers();
 		$(document).on('click', '.battle-left-prev', function(e) {
 			$('.battle-left-wrapper').animate({ left: '+=210' }, 250);
 			cur_battle--;
-			if(cur_battle == 1)
+			if(cur_battle == 0)
 				$('.battle-left-prev').hide();
 			if(max_battle > cur_battle && !$('.battle-left-next').is(':visible'))
 				$('.battle-left-next').show();
@@ -289,8 +289,9 @@ $sign_ups->load_army_numbers();
 					$sign_up_armour[] = $sign_ups->soldiers[$c] ;
 					} else if($sign_ups->soldiers[$c]['Role'] == 'Infantry') {
 					$sign_up_infantry[] = $sign_ups->soldiers[$c];
-					var_dump($sign_up_infantry);
-					}
+					
+					} else
+					$sign_up_everything[] = $sign_ups->soldiers[$c];
 					}
 					
 					if((isset($sign_up_air)) == true){
@@ -334,14 +335,22 @@ $sign_ups->load_army_numbers();
 						<input type="hidden" name="user_id[]" value="' . $infantrysoldier['user_id'] . '">
                         <br clear="all" /><br />';
 						}
+						
+					foreach($sign_up_everything as $everythingsoldier) {
+						
+                        echo '<div class="asu-name">' . $i++ . ". " . htmlentities($everythingsoldier['username']) . '</div>
+                        <div class="asu-army"><select name="army_id[]">';
+                        oo_armies();
+                        echo '</select></div>
+                        <input type="hidden" name="abc_user_id[]" value="' . $everythingsoldier['abc_user_id'] . '">
+						<input type="hidden" name="user_id[]" value="' . $everythingsoldier['user_id'] . '">
+                        <br clear="all" /><br />';
+						}
 					}	?>
                         <input type="submit" name="asu_save" value="Submit" />
                     </form>
                     <div class="clear"></div>
-					<?php if((isset($sign_up_armour)) == true){
-						echo 'this works' ;
-						}
-					 ?>
+					
                 <?php  } else { ?>
                     <div class="large-heading">Unauthorised access!</div>
                     You do not have permission to view this page.

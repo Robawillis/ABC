@@ -13,6 +13,16 @@ $army_to_manage = ($abc_user->is_admin && isset($_GET['army'])) ? (int)$_GET['ar
 $army_management = new Army_management($army_to_manage);
 $army_users = new Sign_ups ($army_to_manage);
 $army_users->load_army_numbers();
+if ($_GET['battleid'] == 'next'){
+$next = array();
+$n = 0;
+	foreach($battles as $bat){
+		if(time() <= $bat->start){
+			$next[$n++] = $bat->id;
+			}
+		}
+		$battle_to_manage = (int)$next[0];
+}else
 $battle_to_manage = (isset($_GET['battleid'])) ? (int)$_GET['battleid'] : 0;
 $signed_up = 0;
 
@@ -201,7 +211,7 @@ if(isset($_POST['bd-s-submit'])) {
                 </div>
                 <div class="content-left-box">
                     <div class="small-heading"><img src="images/icon_user.png" align="left" />SOLDIER INFO</div>
-                    <?php $abc_user->output_soldier_info(); ?>
+                    <?php $abc_user->output_soldier_info();?>
                 </div>
                 <?php if(count($bat_left_bar)) { ?>
                 <div class="content-left-box">
